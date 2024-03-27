@@ -35,7 +35,6 @@ async function performConversion() {
   const OUT_PATH = "./fileIO/out/";
 
   const inputFileNames = fs.readdirSync(IN_PATH);
-  const inputFilePaths = inputFileNames.map((name) => IN_PATH + name);
 
   inputFileNames.forEach(async (name) => {
     const inputFilePath = IN_PATH + name;
