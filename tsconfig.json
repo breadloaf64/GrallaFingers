@@ -2,7 +2,6 @@
   "compilerOptions": {
     "target": "es2016",
     "lib": ["es6"],
-
     "rootDir": "src",
     "allowJs": true,
     "outDir": "build",
@@ -10,6 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "moduleResolution": "node"
   }
 }
