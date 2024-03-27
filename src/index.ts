@@ -1,4 +1,5 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import fs from "fs";
 
 async function createPdf() {
   const pdfDoc = await PDFDocument.create();
@@ -16,4 +17,10 @@ async function createPdf() {
   });
 
   const pdfBytes = await pdfDoc.save();
+
+  fs.writeFileSync("pdf-lib_hello_world.pdf", pdfBytes);
 }
+
+createPdf();
+
+console.log("PDF created");
