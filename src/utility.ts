@@ -1,5 +1,6 @@
 import { Page } from "pdf2json";
 import { CleanedText, Line } from "./types";
+import { SOLFEGE_SCALE } from "./consts";
 
 function getCleanPageText(page: Page) {
   return page.Texts.map((text) => {
@@ -28,4 +29,23 @@ function makeLinesFromTexts(texts: CleanedText[]) {
   return lines;
 }
 
-export { getCleanPageText, makeLinesFromTexts };
+function filterTextBySolfegeLetters(texts: CleanedText[]) {
+  const solfegeLetters = SOLFEGE_SCALE.join("");
+  return texts.filter((text) => solfegeLetters.includes(text.value));
+}
+
+function sortLines(lines: Line[]) {
+  return lines
+    .map((line) => ({
+      y: line.y,
+      letters: line.letters.sort((a, b) => a.x - b.x),
+    }))
+    .sort((a, b) => a.y - b.y);
+}
+
+export {
+  getCleanPageText,
+  makeLinesFromTexts,
+  filterTextBySolfegeLetters,
+  sortLines,
+};

@@ -2,7 +2,12 @@ import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import PDFParser, { Output } from "pdf2json";
 import fs from "fs";
 import { CleanedText, Line } from "./types";
-import { getCleanPageText, makeLinesFromTexts } from "./utility";
+import {
+  filterTextBySolfegeLetters,
+  getCleanPageText,
+  makeLinesFromTexts,
+  sortLines,
+} from "./utility";
 
 async function addWatermark(pdfDoc: PDFDocument) {
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -64,8 +69,6 @@ function logOnLine(text: string) {
   process.stdout.write(text);
 }
 
-const SOLFEGE_SCALE = ["sol", "la", "si", "do", "re", "mi", "fa", "sol'"];
-
 async function main() {
   const PATH = "./fileIO/in/Toc de castells (1st Gralla) with solfege.pdf";
 
@@ -73,22 +76,14 @@ async function main() {
   const firstPage = pdfObj.Pages[0];
   const cleanedTexts = getCleanPageText(firstPage);
 
-  const solfegeLetters = SOLFEGE_SCALE.join("");
-  const justLetters = cleanedTexts.filter((text) =>
-    solfegeLetters.includes(text.value)
-  );
+  const justSolfegeLetters = filterTextBySolfegeLetters(cleanedTexts);
 
-  const lines = makeLinesFromTexts(justLetters);
+  const lines = makeLinesFromTexts(justSolfegeLetters);
 
-  const sortedLines = lines
-    .map((line) => ({
-      y: line.y,
-      letters: line.letters.sort((a, b) => a.x - b.x),
-    }))
-    .sort((a, b) => a.y - b.y);
+  const sortedLines = sortLines(lines);
 
   // print lines
-  lines.forEach((line) => {
+  sortedLines.forEach((line) => {
     const letters = line.letters.map((letter) => letter.value).join("");
     console.log(letters);
   });
