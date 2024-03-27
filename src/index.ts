@@ -2,6 +2,7 @@ import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import PDFParser, { Output } from "pdf2json";
 import fs from "fs";
 import { CleanedText, Line } from "./types";
+import { getCleanPageText } from "./utility";
 
 async function addWatermark(pdfDoc: PDFDocument) {
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -70,14 +71,7 @@ async function main() {
 
   const pdfObj = await getParsedPdfObject(PATH);
   const firstPage = pdfObj.Pages[0];
-  const cleanedTexts = firstPage.Texts.map((text) => {
-    const concatRun = text.R.map((run) => run.T).join("");
-    return {
-      x: text.x,
-      y: text.y,
-      value: concatRun,
-    };
-  }) as CleanedText[];
+  const cleanedTexts = getCleanPageText(firstPage);
 
   const solfegeLetters = SOLFEGE_SCALE.join("");
   const justLetters = cleanedTexts.filter((text) =>
