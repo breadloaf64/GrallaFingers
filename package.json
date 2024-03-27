@@ -16,6 +16,7 @@
     "typescript": "^5.4.3"
   },
   "dependencies": {
-    "pdf-lib": "^1.17.1"
+    "pdf-lib": "^1.17.1",
+    "pdf2json": "^3.0.5"
   }
 }
