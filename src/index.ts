@@ -5,6 +5,7 @@ import {
   filterTextBySolfegeLetters,
   getCleanPageText,
   makeLinesFromTexts,
+  makeSolfegeLine,
   sortLines,
 } from "./utility";
 
@@ -81,10 +82,14 @@ async function main() {
 
   const sortedLines = sortLines(lines);
 
+  const solfegeLines = sortedLines
+    .map((line) => makeSolfegeLine(line))
+    .filter((line) => line.solfeges.length > 0);
+
   // print lines
-  sortedLines.forEach((line) => {
-    const letters = line.letters.map((letter) => letter.value).join("");
-    console.log(letters);
+  solfegeLines.forEach((line) => {
+    const solfeges = line.solfeges.map((solf) => solf.value).join(" ");
+    console.log(solfeges);
   });
 }
 
