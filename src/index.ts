@@ -2,7 +2,7 @@ import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import PDFParser, { Output } from "pdf2json";
 import fs from "fs";
 import { CleanedText, Line } from "./types";
-import { getCleanPageText } from "./utility";
+import { getCleanPageText, makeLinesFromTexts } from "./utility";
 
 async function addWatermark(pdfDoc: PDFDocument) {
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -78,18 +78,7 @@ async function main() {
     solfegeLetters.includes(text.value)
   );
 
-  const lines: Line[] = [];
-
-  // populate lines
-  justLetters.forEach((text) => {
-    const lineExists = lines.some((line) => line.y === text.y);
-    if (lineExists) {
-      const line = lines.find((line) => line.y === text.y);
-      line?.letters.push({ x: text.x, value: text.value });
-    } else {
-      lines.push({ y: text.y, letters: [{ x: text.x, value: text.value }] });
-    }
-  });
+  const lines = makeLinesFromTexts(justLetters);
 
   const sortedLines = lines
     .map((line) => ({
