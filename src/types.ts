@@ -1,4 +1,4 @@
-type line = {
+type Line = {
   y: number;
   letters: {
     x: number;
@@ -6,4 +6,10 @@ type line = {
   }[];
 };
 
-export type { line };
+type CleanedText = {
+  x: number;
+  y: number;
+  value: string;
+};
+
+export type { Line, CleanedText };
