@@ -75,7 +75,7 @@ async function main() {
     return {
       x: text.x,
       y: text.y,
-      value: concatRun === "%09" ? " " : concatRun,
+      value: concatRun,
     };
   });
 
