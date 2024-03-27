@@ -1,7 +1,6 @@
 import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import PDFParser, { Output } from "pdf2json";
 import fs from "fs";
-import { CleanedText, Line } from "./types";
 import {
   filterTextBySolfegeLetters,
   getCleanPageText,
