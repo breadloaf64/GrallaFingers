@@ -1,10 +1,8 @@
 import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import fs from "fs";
 
-async function modifyPdf(existingPdfBytes: Uint8Array) {
-  const pdfDoc = await PDFDocument.load(existingPdfBytes);
+async function addWatermark(pdfDoc: PDFDocument) {
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-
   const pages = pdfDoc.getPages();
   const firstPage = pages[0];
   const { width, height } = firstPage.getSize();
@@ -16,12 +14,21 @@ async function modifyPdf(existingPdfBytes: Uint8Array) {
     color: rgb(0.95, 0.1, 0.1),
     rotate: degrees(-45),
   });
+}
+
+async function modifyPdf(
+  existingPdfBytes: Uint8Array,
+  modification: (pdfDoc: PDFDocument) => Promise<void>
+) {
+  const pdfDoc = await PDFDocument.load(existingPdfBytes);
+
+  await modification(pdfDoc);
 
   const pdfBytes = await pdfDoc.save();
   return pdfBytes;
 }
 
-async function main() {
+async function performConversion() {
   const IN_PATH = "./fileIO/in/";
   const OUT_PATH = "./fileIO/out/";
 
@@ -34,10 +41,12 @@ async function main() {
 
     // get bytes
     const existingPdfBytes = fs.readFileSync(inputFilePath);
-    const convertedPdfBytes = await modifyPdf(existingPdfBytes);
+    const convertedPdfBytes = await modifyPdf(existingPdfBytes, addWatermark);
     fs.writeFileSync(outputFilePath, convertedPdfBytes);
     console.log(`Wrote modified PDF to: ${outputFilePath}`);
   });
 }
+
+async function main() {}
 
 main();
