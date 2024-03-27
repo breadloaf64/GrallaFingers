@@ -2,12 +2,14 @@ import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import PDFParser, { Output } from "pdf2json";
 import fs from "fs";
 import {
-  filterTextBySolfegeLetters,
   getCleanPageText,
+  getSolfegeLinesFromPage,
   makeLinesFromTexts,
   makeSolfegeLine,
+  printSolfegeLines,
   sortLines,
 } from "./utility";
+import { MIN_SOLFEGE_PER_LINE } from "./consts";
 
 async function addWatermark(pdfDoc: PDFDocument) {
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -74,23 +76,9 @@ async function main() {
 
   const pdfObj = await getParsedPdfObject(PATH);
   const firstPage = pdfObj.Pages[0];
-  const cleanedTexts = getCleanPageText(firstPage);
+  const solfegeLines = getSolfegeLinesFromPage(firstPage);
 
-  const justSolfegeLetters = filterTextBySolfegeLetters(cleanedTexts);
-
-  const lines = makeLinesFromTexts(justSolfegeLetters);
-
-  const sortedLines = sortLines(lines);
-
-  const solfegeLines = sortedLines
-    .map((line) => makeSolfegeLine(line))
-    .filter((line) => line.solfeges.length > 0);
-
-  // print lines
-  solfegeLines.forEach((line) => {
-    const solfeges = line.solfeges.map((solf) => solf.value).join(" ");
-    console.log(solfeges);
-  });
+  printSolfegeLines(solfegeLines);
 }
 
 main();

@@ -1,6 +1,6 @@
 import { Page } from "pdf2json";
 import { CleanedText, Line, SolfegeLine } from "./types";
-import { SOLFEGE_SCALE } from "./consts";
+import { MIN_SOLFEGE_PER_LINE, SOLFEGE_SCALE } from "./consts";
 
 // extracts text from page object and keeps only the position and string value
 function getCleanPageText(page: Page) {
@@ -96,10 +96,28 @@ function makeSolfegeLine(line: Line) {
   return solfegeLine;
 }
 
+function getSolfegeLinesFromPage(page: Page) {
+  const cleanedTexts = getCleanPageText(page);
+  const lines = makeLinesFromTexts(cleanedTexts);
+  const sortedLines = sortLines(lines);
+  const solfegeLines = sortedLines
+    .map((line) => makeSolfegeLine(line))
+    .filter((line) => line.solfeges.length > MIN_SOLFEGE_PER_LINE);
+  return solfegeLines;
+}
+
+function printSolfegeLines(solfegeLines: SolfegeLine[]) {
+  solfegeLines.forEach((line) => {
+    console.log(line.solfeges.map((s) => s.value).join(" "));
+  });
+}
+
 export {
   getCleanPageText,
   makeLinesFromTexts,
   filterTextBySolfegeLetters,
   sortLines,
   makeSolfegeLine,
+  getSolfegeLinesFromPage,
+  printSolfegeLines,
 };
