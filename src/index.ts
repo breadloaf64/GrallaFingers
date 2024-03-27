@@ -1,15 +1,7 @@
 import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import PDFParser, { Output } from "pdf2json";
 import fs from "fs";
-import {
-  getCleanPageText,
-  getSolfegeLinesFromPage,
-  makeLinesFromTexts,
-  makeSolfegeLine,
-  printSolfegeLines,
-  sortLines,
-} from "./utility";
-import { MIN_SOLFEGE_PER_LINE } from "./consts";
+import { getSolfegeLinesFromPage, printSolfegeLines } from "./utility";
 
 async function addWatermark(pdfDoc: PDFDocument) {
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
