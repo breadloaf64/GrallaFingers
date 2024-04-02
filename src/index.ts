@@ -59,9 +59,10 @@ function getParsedPdfObject(filepath: string): Promise<Output> {
 }
 
 async function addDiagramsToOnePdf() {
-  const in_PATH = "./fileIO/in/Toc de castells (1st Gralla) with solfege.pdf";
+  const IN_PATH = "./fileIO/in/Toc de castells (1st Gralla) with solfege.pdf";
+  const OUT_PATH = "./fileIO/out/Toc de castells (1st Gralla) with solfege.pdf";
 
-  const pdfObj = await getParsedPdfObject(in_PATH);
+  const pdfObj = await getParsedPdfObject(IN_PATH);
   const firstPage = pdfObj.Pages[0];
   const solfegeLines = getSolfegeLinesFromPage(firstPage);
 }
