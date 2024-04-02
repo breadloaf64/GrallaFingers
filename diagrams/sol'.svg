@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="38.844582mm"
+   height="231.69324mm"
+   viewBox="0 0 38.844582 231.69324"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="gralla fingering diagram - open.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.84100811"
+     inkscape:cx="133.76803"
+     inkscape:cy="331.74472"
+     inkscape:window-width="2880"
+     inkscape:window-height="1541"
+     inkscape:window-x="2869"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(6.2321348,35.536292)">
+    <ellipse
+       style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path1-8"
+       cx="13.32118"
+       cy="-22.215113"
+       rx="11.82118"
+       ry="11.821179"
+       inkscape:label="hole 0 (thumb)" />
+    <ellipse
+       style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path1"
+       cx="13.32118"
+       cy="13.321179"
+       rx="11.82118"
+       ry="11.821179"
+       inkscape:label="hole 1" />
+    <ellipse
+       style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path1-7"
+       cx="13.32118"
+       cy="43.321178"
+       rx="11.82118"
+       ry="11.821179"
+       inkscape:label="hole 2" />
+    <ellipse
+       style="fill:#f9f9f9;fill-opacity:0;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path1-7-6"
+       cx="13.32118"
+       cy="73.321182"
+       rx="11.82118"
+       ry="11.821179"
+       inkscape:label="hole 3" />
+    <ellipse
+       style="fill:#f9f9f9;fill-opacity:0;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path1-0"
+       cx="13.32118"
+       cy="113.32118"
+       rx="11.82118"
+       ry="11.821179"
+       inkscape:label="hole 4" />
+    <ellipse
+       style="fill:#f9f9f9;fill-opacity:0;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path1-7-2"
+       cx="13.32118"
+       cy="143.32118"
+       rx="11.82118"
+       ry="11.821179"
+       inkscape:label="hole 5" />
+    <ellipse
+       style="fill:#f9f9f9;fill-opacity:0;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path1-7-6-3"
+       cx="13.32118"
+       cy="173.32118"
+       rx="11.82118"
+       ry="11.821179"
+       inkscape:label="hole 6" />
+    <path
+       style="fill:#f9f9f9;fill-opacity:0;stroke:#000000;stroke-width:2.99439;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       d="M 2.497195,94 H 24.750501"
+       id="path2"
+       sodipodi:nodetypes="cc"
+       inkscape:label="separator" />
+    <rect
+       style="fill:#f9f9f9;fill-opacity:0;stroke:#000000;stroke-width:2.74337;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2"
+       width="36.101212"
+       height="200.37202"
+       x="-4.8604498"
+       y="-5.5867596"
+       ry="13.391032"
+       inkscape:label="body" />
+  </g>
+</svg>
