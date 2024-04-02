@@ -97,12 +97,19 @@ function makeSolfegeLine(line: Line) {
 }
 
 function getSolfegeLinesFromPage(page: Page) {
+  console.log("Getting solfege lines from page:");
+  console.log("min solfege per line: ", MIN_SOLFEGE_PER_LINE);
+
   const cleanedTexts = getCleanPageText(page);
   const lines = makeLinesFromTexts(cleanedTexts);
   const sortedLines = sortLines(lines);
   const solfegeLines = sortedLines
     .map((line) => makeSolfegeLine(line))
     .filter((line) => line.solfeges.length > MIN_SOLFEGE_PER_LINE);
+
+  console.log("=====================================");
+  printSolfegeLines(solfegeLines);
+  console.log("=====================================");
   return solfegeLines;
 }
 
