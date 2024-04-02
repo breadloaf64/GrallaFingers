@@ -1,5 +1,5 @@
 import { PDFDocument } from "pdf-lib";
-import { getSolfegeForURL } from "./read";
+import { getDataForURL } from "./read";
 import fs from "fs";
 import { addWatermark, markSolfege } from "./modifyPDF";
 import { printSolfegeDocument } from "./print";
@@ -22,12 +22,15 @@ async function ProcessFolder() {
 }
 
 async function createNewPDFWithDiagrams(inputUrl: string, outputUrl: string) {
-  const solfege = await getSolfegeForURL(inputUrl);
+  const {
+    solfegeDocument: solfege,
+    parsedPageDimensions: parsedPageDimensions,
+  } = await getDataForURL(inputUrl);
 
   console.log("Generated solfge:");
   printSolfegeDocument(solfege);
   createNewPDFWithModification(inputUrl, outputUrl, (pdfDoc: PDFDocument) =>
-    markSolfege(pdfDoc, solfege)
+    markSolfege(pdfDoc, solfege, parsedPageDimensions)
   );
 }
 

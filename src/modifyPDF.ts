@@ -1,5 +1,7 @@
 import { PDFDocument, StandardFonts, degrees, rgb } from "pdf-lib";
-import { SolfegeDocument } from "./types";
+import { Dimensions, SolfegeDocument } from "./types";
+import { remapNumber } from "./utility";
+import { Y_SHIFT } from "./consts";
 
 async function addWatermark(pdfDoc: PDFDocument) {
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -31,33 +33,32 @@ async function markCoordinates(pdfDoc: PDFDocument) {
   }
 }
 
-async function markSolfege(pdfDoc: PDFDocument, solfege: SolfegeDocument) {
+async function markSolfege(
+  pdfDoc: PDFDocument,
+  solfege: SolfegeDocument,
+  parsedPageDimensions: Dimensions[]
+) {
   if (pdfDoc.getPages().length !== solfege.length) {
     throw new Error(
       "The number of pages in the PDF does not match the number of solfege pages."
     );
   }
 
-  const solfegeContainsNaN = solfege.some((solfegePage) => {
-    solfegePage.some((solfegeLine) => {
-      Number.isNaN(solfegeLine.y) ||
-        solfegeLine.solfeges.some((solfege) => {
-          Number.isNaN(solfege.x);
-        });
-    });
-  });
-
-  if (solfegeContainsNaN) {
-    throw new Error("Some solfege coordinate values are NaN.");
-  }
-
   let num = 0;
   pdfDoc.getPages().forEach((page, pageIndex) => {
     const solfegePage = solfege[pageIndex];
-    solfegePage.forEach((solfegeLine, lineIndex) => {
-      const yPos = solfegeLine.y;
-      solfegeLine.solfeges.forEach((solfege, solfegeIndex) => {
-        const xPos = solfege.x;
+
+    //get dimensions
+    const { width: inPageWidth, height: inPageHeight } =
+      parsedPageDimensions[pageIndex];
+    const outPageWidth = page.getWidth();
+    const outPageHeight = page.getHeight();
+
+    solfegePage.forEach((solfegeLine) => {
+      const yPos =
+        remapNumber(solfegeLine.y, 0, inPageHeight, outPageHeight, 0) + Y_SHIFT;
+      solfegeLine.solfeges.forEach((solfege) => {
+        const xPos = remapNumber(solfege.x, 0, inPageWidth, 0, outPageWidth);
         const value = solfege.value;
 
         if (isNaN(xPos) || isNaN(yPos)) {

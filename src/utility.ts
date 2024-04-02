@@ -120,6 +120,19 @@ function getSolfegeLinesFromPage(page: Page) {
   return solfegeLines;
 }
 
+function remapNumber(
+  value: number,
+  domainMin: number,
+  domainMax: number,
+  rangeMin: number,
+  rangeMax: number
+) {
+  return (
+    ((value - domainMin) / (domainMax - domainMin)) * (rangeMax - rangeMin) +
+    rangeMin
+  );
+}
+
 export {
   getCleanPageText,
   makeLinesFromTexts,
@@ -127,4 +140,5 @@ export {
   sortLines,
   makeSolfegeLine,
   getSolfegeLinesFromPage,
+  remapNumber,
 };

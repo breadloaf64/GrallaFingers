@@ -1,5 +1,15 @@
 import { SOLFEGE_SCALE } from "./consts";
 
+type PDFData = {
+  solfegeDocument: SolfegeDocument;
+  parsedPageDimensions: Dimensions[];
+};
+
+type Dimensions = {
+  width: number;
+  height: number;
+};
+
 type Line = {
   y: number;
   letters: {
@@ -35,4 +45,6 @@ export type {
   SolfegeLine,
   SolfegePage,
   SolfegeDocument,
+  PDFData,
+  Dimensions,
 };

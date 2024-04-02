@@ -1,12 +1,18 @@
 import PDFParser, { Output } from "pdf2json";
 import { getSolfegeLinesFromPage } from "./utility";
-import { SolfegeDocument } from "./types";
+import { PDFData, SolfegeDocument } from "./types";
 
-async function getSolfegeForURL(url: string) {
+async function getDataForURL(url: string) {
   const pdfObj = await getParsedPdfObject(url);
-  return pdfObj.Pages.map((page) =>
+  const solfegeDocument = pdfObj.Pages.map((page) =>
     getSolfegeLinesFromPage(page)
-  ) as SolfegeDocument;
+  );
+  const parsedPageDimensions = pdfObj.Pages.map((page) => ({
+    width: page.Width,
+    height: page.Height,
+  }));
+
+  return { solfegeDocument, parsedPageDimensions } as PDFData;
 }
 
 function getParsedPdfObject(filepath: string): Promise<Output> {
@@ -19,4 +25,4 @@ function getParsedPdfObject(filepath: string): Promise<Output> {
   });
 }
 
-export { getSolfegeForURL };
+export { getDataForURL };
