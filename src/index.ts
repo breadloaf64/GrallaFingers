@@ -1,8 +1,8 @@
 import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import fs from "fs";
-import { printSolfegePage } from "./utility";
 import { getSolfegeForURL } from "./read";
 import { MIN_SOLFEGE_PER_LINE } from "./consts";
+import { printSolfegeDocument } from "./print";
 
 async function addWatermark(pdfDoc: PDFDocument) {
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -55,12 +55,7 @@ async function main() {
   const solfegeDocument = await getSolfegeForURL(
     "./fileIO/in/Toc de castells (1st Gralla) with solfege.pdf"
   );
-  console.log("=====================================");
-  solfegeDocument.forEach((solfegePage, index) => {
-    console.log("Page: ", index + 1);
-    printSolfegePage(solfegePage);
-  });
-  console.log("=====================================");
+  printSolfegeDocument(solfegeDocument);
 }
 
 main();
