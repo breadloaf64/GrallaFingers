@@ -2,8 +2,9 @@ import { PDFDocument, StandardFonts, degrees, rgb } from "pdf-lib";
 import { Dimensions, SolfegeDocument } from "./types";
 import { remapNumber } from "./utility";
 import { Y_SHIFT } from "./consts";
+import fs from "fs";
 
-async function addWatermark(pdfDoc: PDFDocument) {
+async function addWatermark(pdfDoc: PDFDocument): Promise<void> {
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
   const pages = pdfDoc.getPages();
   const firstPage = pages[0];
@@ -18,7 +19,7 @@ async function addWatermark(pdfDoc: PDFDocument) {
   });
 }
 
-async function markCoordinates(pdfDoc: PDFDocument) {
+async function markCoordinates(pdfDoc: PDFDocument): Promise<void> {
   const increment = 50;
   const max = 2000;
   for (let x = 0; x < max; x += increment) {
@@ -33,11 +34,11 @@ async function markCoordinates(pdfDoc: PDFDocument) {
   }
 }
 
-async function markSolfege(
+async function numberSolfege(
   pdfDoc: PDFDocument,
   solfege: SolfegeDocument,
   parsedPageDimensions: Dimensions[]
-) {
+): Promise<void> {
   if (pdfDoc.getPages().length !== solfege.length) {
     throw new Error(
       "The number of pages in the PDF does not match the number of solfege pages."
@@ -76,4 +77,21 @@ async function markSolfege(
   });
 }
 
-export { addWatermark, markSolfege, markCoordinates };
+async function addDiagram(
+  pdfDoc: PDFDocument,
+  diagramData: { [key: string]: Buffer }
+): Promise<void> {
+  const page = pdfDoc.getPages()[0];
+
+  const pngImage = await pdfDoc.embedPng(diagramData["mi"]);
+  const pngDims = pngImage.scale(0.5);
+
+  page.drawImage(pngImage, {
+    x: 100,
+    y: 100,
+    width: pngDims.width,
+    height: pngDims.height,
+  });
+}
+
+export { addWatermark, numberSolfege, markCoordinates, addDiagram };

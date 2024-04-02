@@ -1,7 +1,7 @@
 import { PDFDocument } from "pdf-lib";
 import { getDataForURL } from "./read";
 import fs from "fs";
-import { addWatermark, markSolfege } from "./modifyPDF";
+import { addWatermark, numberSolfege } from "./modifyPDF";
 import { printSolfegeDocument } from "./print";
 
 async function ProcessFolder() {
@@ -30,7 +30,7 @@ async function createNewPDFWithDiagrams(inputUrl: string, outputUrl: string) {
   console.log("Generated solfge:");
   printSolfegeDocument(solfege);
   createNewPDFWithModification(inputUrl, outputUrl, (pdfDoc: PDFDocument) =>
-    markSolfege(pdfDoc, solfege, parsedPageDimensions)
+    numberSolfege(pdfDoc, solfege, parsedPageDimensions)
   );
 }
 
