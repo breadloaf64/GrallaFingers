@@ -1,7 +1,7 @@
 import { PDFDocument } from "pdf-lib";
 import { getSolfegeForURL } from "./read";
 import fs from "fs";
-import { addWatermark } from "./modifyPDF";
+import { addWatermark, markSolfege } from "./modifyPDF";
 import { printSolfegeDocument } from "./print";
 
 async function ProcessFolder() {
@@ -28,7 +28,10 @@ async function createNewPDFWithDiagrams(inputUrl: string, outputUrl: string) {
   printSolfegeDocument(solfege);
 
   const pdfBytes = fs.readFileSync(inputUrl);
-  const pdfBytesModified = await modifyPdfBytes(pdfBytes, addWatermark);
+  const pdfBytesModified = await modifyPdfBytes(
+    pdfBytes,
+    (pdfDoc: PDFDocument) => markSolfege(pdfDoc, solfege)
+  );
   fs.writeFileSync(outputUrl, pdfBytesModified);
 }
 

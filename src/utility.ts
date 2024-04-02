@@ -55,43 +55,57 @@ function makeSolfegeLine(line: Line) {
   } as SolfegeLine;
   let index = 0;
   while (index < line.letters.length) {
-    const nextFourLetters = line.letters
-      .slice(index, index + 4)
-      .map((letter) => letter.value)
-      .reduce((acc, letter) => acc + letter, "");
+    const nextFourLetters = (
+      line.letters
+        .slice(index, index + 4)
+        .map((letter) => letter.value)
+        .reduce((acc, letter) => acc + letter, "") + "%%"
+    ) // add delimiter to prevent false positives
+      .slice(0, 4);
     const nextThreeLetters = nextFourLetters.slice(0, 3);
     const nextTwoLetters = nextFourLetters.slice(0, 2);
 
-    if (SOLFEGE_SCALE.includes(nextFourLetters)) {
-      solfegeLine.solfeges.push({
-        x:
-          (line.letters[index]?.x +
+    const match = SOLFEGE_SCALE.includes(nextFourLetters)
+      ? "four"
+      : SOLFEGE_SCALE.includes(nextThreeLetters)
+      ? "three"
+      : SOLFEGE_SCALE.includes(nextTwoLetters)
+      ? "two"
+      : "none";
+
+    const x =
+      match === "four"
+        ? (line.letters[index]?.x +
             line.letters[index + 1]?.x +
             line.letters[index + 2]?.x +
             line.letters[index + 3]?.x) /
-          4,
-        value: nextFourLetters,
-      });
-      index += 4;
-    } else if (SOLFEGE_SCALE.includes(nextThreeLetters)) {
-      solfegeLine.solfeges.push({
-        x:
-          (line.letters[index]?.x +
+          4
+        : match === "three"
+        ? (line.letters[index]?.x +
             line.letters[index + 1]?.x +
             line.letters[index + 2]?.x) /
-          3,
-        value: nextThreeLetters,
-      });
-      index += 3;
-    } else if (SOLFEGE_SCALE.includes(nextTwoLetters)) {
-      solfegeLine.solfeges.push({
-        x: (line.letters[index]?.x + line.letters[index + 1]?.x) / 2,
-        value: nextTwoLetters,
-      });
-      index += 2;
-    } else {
-      index++;
+          3
+        : match === "two"
+        ? (line.letters[index]?.x + line.letters[index + 1]?.x) / 2
+        : 0;
+
+    const value =
+      match === "four"
+        ? nextFourLetters
+        : match === "three"
+        ? nextThreeLetters
+        : match === "two"
+        ? nextTwoLetters
+        : "";
+
+    const indexIncrement =
+      match === "four" ? 4 : match === "three" ? 3 : match === "two" ? 2 : 1;
+
+    if (match !== "none") {
+      solfegeLine.solfeges.push({ x, value });
     }
+
+    index += indexIncrement;
   }
   return solfegeLine;
 }
