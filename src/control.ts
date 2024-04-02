@@ -26,12 +26,18 @@ async function createNewPDFWithDiagrams(inputUrl: string, outputUrl: string) {
 
   console.log("Generated solfge:");
   printSolfegeDocument(solfege);
-
-  const pdfBytes = fs.readFileSync(inputUrl);
-  const pdfBytesModified = await modifyPdfBytes(
-    pdfBytes,
-    (pdfDoc: PDFDocument) => markSolfege(pdfDoc, solfege)
+  createNewPDFWithModification(inputUrl, outputUrl, (pdfDoc: PDFDocument) =>
+    markSolfege(pdfDoc, solfege)
   );
+}
+
+async function createNewPDFWithModification(
+  inputUrl: string,
+  outputUrl: string,
+  modification: (pdfDoc: PDFDocument) => Promise<void>
+) {
+  const pdfBytes = fs.readFileSync(inputUrl);
+  const pdfBytesModified = await modifyPdfBytes(pdfBytes, modification);
   fs.writeFileSync(outputUrl, pdfBytesModified);
 }
 
@@ -47,4 +53,4 @@ async function modifyPdfBytes(
   return pdfBytes;
 }
 
-export { createNewPDFWithDiagrams };
+export { createNewPDFWithDiagrams, createNewPDFWithModification };

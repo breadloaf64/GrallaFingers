@@ -16,6 +16,21 @@ async function addWatermark(pdfDoc: PDFDocument) {
   });
 }
 
+async function markCoordinates(pdfDoc: PDFDocument) {
+  const increment = 50;
+  const max = 2000;
+  for (let x = 0; x < max; x += increment) {
+    for (let y = 0; y < max; y += increment) {
+      const page = pdfDoc.getPages()[0];
+      page.drawText(`(${x}, ${y})`, {
+        x: x,
+        y: y,
+        size: 10,
+      });
+    }
+  }
+}
+
 async function markSolfege(pdfDoc: PDFDocument, solfege: SolfegeDocument) {
   if (pdfDoc.getPages().length !== solfege.length) {
     throw new Error(
@@ -60,4 +75,4 @@ async function markSolfege(pdfDoc: PDFDocument, solfege: SolfegeDocument) {
   });
 }
 
-export { addWatermark, markSolfege };
+export { addWatermark, markSolfege, markCoordinates };
