@@ -2,6 +2,8 @@ import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
 import PDFParser, { Output } from "pdf2json";
 import fs from "fs";
 import { getSolfegeLinesFromPage, printSolfegeLines } from "./utility";
+import { getSolfegeForURL } from "./read";
+import { MIN_SOLFEGE_PER_LINE } from "./consts";
 
 async function addWatermark(pdfDoc: PDFDocument) {
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -48,27 +50,15 @@ async function performConversion() {
   });
 }
 
-function getParsedPdfObject(filepath: string): Promise<Output> {
-  return new Promise((resolve, reject) => {
-    const pdfParser = new PDFParser();
-    pdfParser.on("pdfParser_dataError", (errData) => reject(errData));
-    pdfParser.on("pdfParser_dataReady", (pdfData) => resolve(pdfData));
-
-    pdfParser.loadPDF(filepath);
-  });
-}
-
-async function addDiagramsToOnePdf() {
-  const IN_PATH = "./fileIO/in/Toc de castells (1st Gralla) with solfege.pdf";
-  const OUT_PATH = "./fileIO/out/Toc de castells (1st Gralla) with solfege.pdf";
-
-  const pdfObj = await getParsedPdfObject(IN_PATH);
-  const firstPage = pdfObj.Pages[0];
-  const solfegeLines = getSolfegeLinesFromPage(firstPage);
-}
-
 async function main() {
-  addDiagramsToOnePdf();
+  console.log("Parsing PDF...");
+  console.log("min solfege per line: ", MIN_SOLFEGE_PER_LINE);
+  const solfege = await getSolfegeForURL(
+    "./fileIO/in/Toc de castells (1st Gralla) with solfege.pdf"
+  );
+  console.log("=====================================");
+  printSolfegeLines(solfege);
+  console.log("=====================================");
 }
 
 main();
