@@ -58,18 +58,16 @@ function getParsedPdfObject(filepath: string): Promise<Output> {
   });
 }
 
-function logOnLine(text: string) {
-  process.stdout.write(text);
+async function addDiagramsToOnePdf() {
+  const in_PATH = "./fileIO/in/Toc de castells (1st Gralla) with solfege.pdf";
+
+  const pdfObj = await getParsedPdfObject(in_PATH);
+  const firstPage = pdfObj.Pages[0];
+  const solfegeLines = getSolfegeLinesFromPage(firstPage);
 }
 
 async function main() {
-  const PATH = "./fileIO/in/Toc de castells (1st Gralla) with solfege.pdf";
-
-  const pdfObj = await getParsedPdfObject(PATH);
-  const firstPage = pdfObj.Pages[0];
-  const solfegeLines = getSolfegeLinesFromPage(firstPage);
-
-  printSolfegeLines(solfegeLines);
+  addDiagramsToOnePdf();
 }
 
 main();
