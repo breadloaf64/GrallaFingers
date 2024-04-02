@@ -1,7 +1,6 @@
 import { PDFDocument, StandardFonts, rgb, degrees } from "pdf-lib";
-import PDFParser, { Output } from "pdf2json";
 import fs from "fs";
-import { getSolfegeLinesFromPage, printSolfegeLines } from "./utility";
+import { printSolfegePage } from "./utility";
 import { getSolfegeForURL } from "./read";
 import { MIN_SOLFEGE_PER_LINE } from "./consts";
 
@@ -53,11 +52,14 @@ async function performConversion() {
 async function main() {
   console.log("Parsing PDF...");
   console.log("min solfege per line: ", MIN_SOLFEGE_PER_LINE);
-  const solfege = await getSolfegeForURL(
+  const solfegeDocument = await getSolfegeForURL(
     "./fileIO/in/Toc de castells (1st Gralla) with solfege.pdf"
   );
   console.log("=====================================");
-  printSolfegeLines(solfege);
+  solfegeDocument.forEach((solfegePage, index) => {
+    console.log("Page: ", index + 1);
+    printSolfegePage(solfegePage);
+  });
   console.log("=====================================");
 }
 

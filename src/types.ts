@@ -24,4 +24,15 @@ type SolfegeLine = {
   }[];
 };
 
-export type { Line, CleanedText, Solfege, SolfegeLine };
+type SolfegePage = SolfegeLine[];
+
+type SolfegeDocument = SolfegePage[];
+
+export type {
+  Line,
+  CleanedText,
+  Solfege,
+  SolfegeLine,
+  SolfegePage,
+  SolfegeDocument,
+};

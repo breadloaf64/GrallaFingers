@@ -1,13 +1,14 @@
 import PDFParser, { Output } from "pdf2json";
 import { getSolfegeLinesFromPage } from "./utility";
+import { SolfegeDocument } from "./types";
 
 async function getSolfegeForURL(url: string) {
   const IN_PATH = "./fileIO/in/Toc de castells (1st Gralla) with solfege.pdf";
 
   const pdfObj = await getParsedPdfObject(IN_PATH);
-  const firstPage = pdfObj.Pages[0];
-  const solfegeLines = getSolfegeLinesFromPage(firstPage);
-  return solfegeLines;
+  return pdfObj.Pages.map((page) =>
+    getSolfegeLinesFromPage(page)
+  ) as SolfegeDocument;
 }
 
 function getParsedPdfObject(filepath: string): Promise<Output> {
