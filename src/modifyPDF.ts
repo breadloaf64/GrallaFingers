@@ -77,7 +77,7 @@ async function numberSolfege(
   });
 }
 
-async function addDiagram(
+async function addDiagramTest(
   pdfDoc: PDFDocument,
   diagramData: { [key: string]: Buffer }
 ): Promise<void> {
@@ -94,4 +94,52 @@ async function addDiagram(
   });
 }
 
-export { addWatermark, numberSolfege, markCoordinates, addDiagram };
+async function addDiagramsAccordingToSolfege(
+  pdfDoc: PDFDocument,
+  solfege: SolfegeDocument,
+  parsedPageDimensions: Dimensions[],
+  diagramData: { [key: string]: Buffer }
+): Promise<void> {
+  if (pdfDoc.getPages().length !== solfege.length) {
+    throw new Error(
+      "The number of pages in the PDF does not match the number of solfege pages."
+    );
+  }
+
+  pdfDoc.getPages().forEach((page, pageIndex) => {
+    const solfegePage = solfege[pageIndex];
+
+    //get dimensions
+    const { width: inPageWidth, height: inPageHeight } =
+      parsedPageDimensions[pageIndex];
+    const outPageWidth = page.getWidth();
+    const outPageHeight = page.getHeight();
+
+    solfegePage.forEach((solfegeLine) => {
+      const yPos =
+        remapNumber(solfegeLine.y, 0, inPageHeight, outPageHeight, 0) + Y_SHIFT;
+      solfegeLine.solfeges.forEach(async (solfege) => {
+        const xPos = remapNumber(solfege.x, 0, inPageWidth, 0, outPageWidth);
+        const value = solfege.value;
+
+        const pngImage = await pdfDoc.embedPng(diagramData[value]);
+        const pngDims = pngImage.scale(0.06);
+
+        page.drawImage(pngImage, {
+          x: xPos,
+          y: yPos,
+          width: pngDims.width,
+          height: pngDims.height,
+        });
+      });
+    });
+  });
+}
+
+export {
+  addWatermark,
+  numberSolfege,
+  markCoordinates,
+  addDiagramTest,
+  addDiagramsAccordingToSolfege,
+};

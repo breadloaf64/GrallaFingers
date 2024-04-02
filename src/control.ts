@@ -1,7 +1,11 @@
 import { PDFDocument } from "pdf-lib";
 import { getDataForURL } from "./read";
 import fs from "fs";
-import { addWatermark, numberSolfege } from "./modifyPDF";
+import {
+  addDiagramsAccordingToSolfege,
+  addWatermark,
+  numberSolfege,
+} from "./modifyPDF";
 import { printSolfegeDocument } from "./print";
 
 async function ProcessFolder() {
@@ -17,11 +21,15 @@ async function ProcessFolder() {
     const inputFilePath = IN_PATH + name;
     const outputFilePath = OUT_PATH + name;
 
-    createNewPDFWithDiagrams(inputFilePath, outputFilePath);
+    // createNewPDFWithDiagrams(inputFilePath, outputFilePath);
   });
 }
 
-async function createNewPDFWithDiagrams(inputUrl: string, outputUrl: string) {
+async function createNewPDFWithDiagrams(
+  inputUrl: string,
+  outputUrl: string,
+  diagramData: { [key: string]: Buffer }
+) {
   const {
     solfegeDocument: solfege,
     parsedPageDimensions: parsedPageDimensions,
@@ -30,7 +38,12 @@ async function createNewPDFWithDiagrams(inputUrl: string, outputUrl: string) {
   console.log("Generated solfge:");
   printSolfegeDocument(solfege);
   createNewPDFWithModification(inputUrl, outputUrl, (pdfDoc: PDFDocument) =>
-    numberSolfege(pdfDoc, solfege, parsedPageDimensions)
+    addDiagramsAccordingToSolfege(
+      pdfDoc,
+      solfege,
+      parsedPageDimensions,
+      diagramData
+    )
   );
 }
 
