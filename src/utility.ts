@@ -106,12 +106,6 @@ function getSolfegeLinesFromPage(page: Page) {
   return solfegeLines;
 }
 
-function printSolfegePage(solfegeLines: SolfegeLine[]) {
-  solfegeLines.forEach((line) => {
-    console.log(line.solfeges.map((s) => s.value).join(" "));
-  });
-}
-
 export {
   getCleanPageText,
   makeLinesFromTexts,
@@ -119,5 +113,4 @@ export {
   sortLines,
   makeSolfegeLine,
   getSolfegeLinesFromPage,
-  printSolfegePage,
 };
