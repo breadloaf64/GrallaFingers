@@ -2,7 +2,8 @@
 
 This is a tool for me to add gralla finger diagrams to sheet music PDFs which have solfege as lyrics
 
-![image](https://github.com/breadloaf64/GrallaFingers/assets/60357301/1fe2b9c2-53ff-44c1-8446-f099119e57f5)
+![image](https://github.com/breadloaf64/GrallaFingers/assets/60357301/71200d70-a759-4f89-8a93-0d28c4c266af)
+
 
 ## How to use
 
