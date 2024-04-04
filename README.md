@@ -4,12 +4,12 @@ This is a tool for me to add gralla finger diagrams to sheet music which have so
 
 ## How to use
 
-- install npm
-- Clone this repo locally
-- go to the project root folder and run `npm install`
-- paste your sheet music PDF(s) into /fileIO/in
-- run `npm start`
-- modified PDF(s) with diagrams are written to /fileIO/out
+1. install npm
+1. Clone this repo locally
+1. go to the project root folder and run `npm install`
+1. paste your sheet music PDF(s) into /fileIO/in
+1. run `npm start`
+1. modified PDF(s) with diagrams are written to /fileIO/out
 
 ## Assumptions
 
