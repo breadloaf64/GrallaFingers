@@ -4,7 +4,6 @@ This is a tool for me to add gralla finger diagrams to sheet music PDFs which ha
 
 ![image](https://github.com/breadloaf64/GrallaFingers/assets/60357301/71200d70-a759-4f89-8a93-0d28c4c266af)
 
-
 ## How to use
 
 1. install npm
@@ -17,6 +16,8 @@ This is a tool for me to add gralla finger diagrams to sheet music PDFs which ha
 ## Assumptions
 
 We need a PDF, containing solfege text (sol, la, si, do, re, mi, fa, sol'). Text in a line must share y values in the PDF. This will work if you made the PDF using musescore, and added the text as lyrics. There will need to be enough space between staves so that the diagrams do not overlap any existing content.
+
+If there is a typo in your solfege, that note will be ignored!
 
 ## Controls
 
