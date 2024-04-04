@@ -1,6 +1,8 @@
 # GrallaFingers
 
-This is a tool for me to add gralla finger diagrams to sheet music which have solfege as lyrics
+This is a tool for me to add gralla finger diagrams to sheet music PDFs which have solfege as lyrics
+
+![image](https://github.com/breadloaf64/GrallaFingers/assets/60357301/1fe2b9c2-53ff-44c1-8446-f099119e57f5)
 
 ## How to use
 
