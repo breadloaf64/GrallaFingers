@@ -1,14 +1,10 @@
 import { PDFDocument } from "pdf-lib";
 import { getDataForURL } from "./read";
 import fs from "fs";
-import {
-  addDiagramsAccordingToSolfege,
-  addWatermark,
-  numberSolfege,
-} from "./modifyPDF";
+import { addDiagramsAccordingToSolfege } from "./modifyPDF";
 import { printSolfegeDocument } from "./print";
 
-async function ProcessFolder() {
+async function processFolder(diagramData: { [key: string]: Buffer }) {
   const IN_PATH = "./fileIO/in/";
   const OUT_PATH = "./fileIO/out/";
 
@@ -21,7 +17,7 @@ async function ProcessFolder() {
     const inputFilePath = IN_PATH + name;
     const outputFilePath = OUT_PATH + name;
 
-    // createNewPDFWithDiagrams(inputFilePath, outputFilePath);
+    createNewPDFWithDiagrams(inputFilePath, outputFilePath, diagramData);
   });
 }
 
@@ -69,4 +65,8 @@ async function modifyPdfBytes(
   return pdfBytes;
 }
 
-export { createNewPDFWithDiagrams, createNewPDFWithModification };
+export {
+  createNewPDFWithDiagrams,
+  createNewPDFWithModification,
+  processFolder,
+};
