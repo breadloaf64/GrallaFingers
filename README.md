@@ -9,6 +9,7 @@ This is a tool for adding gralla finger diagrams to sheet music PDFs which have 
 1. [install npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 1. Clone this repo locally
 1. go to the project root folder and run `npm install`
+1. in the project root, add a folder called "fileIO". Inside that folder add a folder called "in" and a folder called "out"
 1. paste your sheet music PDF(s) into /fileIO/in
 1. run `npm start`
 1. modified PDF(s) with diagrams are written to /fileIO/out
