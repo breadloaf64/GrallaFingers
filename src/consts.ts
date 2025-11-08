@@ -1,4 +1,4 @@
-const SOLFEGE_SCALE = ["sol", "la", "si", "do", "re", "mi", "fa", "sol'"];
+const SOLFEGE_SCALE = ["sol", "la", "si", "do", "re", "mi", "fa", "sol'", "la'", "si'"];
 const MIN_SOLFEGE_PER_LINE = 4;
 const Y_SHIFT = -70;
 
