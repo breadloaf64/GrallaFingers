@@ -2,7 +2,7 @@ import fs from "fs";
 import { SOLFEGE_SCALE } from "./consts";
 import { Solfege } from "./types";
 
-const DIAGRAM_PATH = "./diagrams/";
+const DIAGRAM_PATH = "./diagrams/png/";
 const DIAGRAM_SUFFIX = ".png";
 
 function getDiagramData() {
