@@ -2,16 +2,24 @@ import { Page } from "pdf2json";
 import { CleanedText, Line, SolfegeLine } from "./types";
 import { MIN_SOLFEGE_PER_LINE, SOLFEGE_SCALE } from "./consts";
 
+// convert known character codes into their corresponding characters
+function convertKnownCharacters(character: string) {
+  if (character === "%23") return '#'
+  else return character;
+}
+
 // extracts text from page object and keeps only the position and string value
 function getCleanPageText(page: Page) {
   return page.Texts.map((text) => {
     const concatRun = text.R.map((run) => run.T).join("");
-    return {
-      x: text.x,
-      y: text.y,
-      value: concatRun,
-    };
-  }) as CleanedText[];
+
+    if (concatRun)
+      return {
+        x: text.x,
+        y: text.y,
+        value: convertKnownCharacters(concatRun),
+      };
+    }) as CleanedText[];
 }
 
 // groups texts into lines based on y position
