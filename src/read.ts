@@ -1,6 +1,6 @@
 import PDFParser, { Output } from "pdf2json";
 import { getSolfegeLinesFromPage } from "./utility";
-import { PDFData, SolfegeDocument } from "./types";
+import { PDFData } from "./types";
 
 async function getDataForURL(url: string) {
   const pdfObj = await getParsedPdfObject(url);
