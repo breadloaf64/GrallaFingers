@@ -2,13 +2,17 @@ import { Page } from "pdf2json";
 import { CleanedText, Line, SolfegeLine } from "./types";
 import { MIN_SOLFEGE_PER_LINE, SOLFEGE_SCALE } from "./consts";
 
-// convert known character codes into their corresponding characters
+/**
+ * convert known character codes into their corresponding characters
+ */ 
 function convertKnownCharacters(character: string) {
   if (character === "%23") return '#'
   else return character;
 }
 
-// extracts text from page object and keeps only the position and string value
+/**
+ * extracts text from page object and keeps only the position and string value
+ */ 
 function getCleanPageText(page: Page) {
   return page.Texts.map((text) => {
     const concatRun = text.R.map((run) => run.T).join("");
@@ -22,7 +26,9 @@ function getCleanPageText(page: Page) {
     }) as CleanedText[];
 }
 
-// groups texts into lines based on y position
+/**
+ * groups texts into lines based on y position
+ */ 
 function makeLinesFromTexts(texts: CleanedText[]) {
   const lines: Line[] = [];
 
@@ -39,13 +45,17 @@ function makeLinesFromTexts(texts: CleanedText[]) {
   return lines;
 }
 
-// filters out text that is not a solfege letter
+/**
+ * filters out text that is not a solfege letter
+ */ 
 function filterTextBySolfegeLetters(texts: CleanedText[]) {
   const solfegeLetters = SOLFEGE_SCALE.join("");
   return texts.filter((text) => solfegeLetters.includes(text.value));
 }
 
-// sorts text within line by x position, then sorts lines by y position
+/**
+ * sorts text within line by x position, then sorts lines by y position
+ */ 
 function sortLines(lines: Line[]): Line[] {
   return lines
     .map((line) => ({
@@ -55,7 +65,9 @@ function sortLines(lines: Line[]): Line[] {
     .sort((a, b) => a.y - b.y);
 }
 
-// assumes texts in line are sorted by x position
+/**
+ * assumes texts in line are sorted by x position
+ */ 
 function makeSolfegeLine(line: Line) {
   const solfegeLine = {
     y: line.y,
