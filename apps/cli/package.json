@@ -1,0 +1,13 @@
+{
+  "name": "gralla-fingers-cli",
+  "private": true,
+  "scripts": {
+    "convert": "tsx index.ts"
+  },
+  "dependencies": {
+    "gralla-fingers-converter-core": "file:../../packages/converter-core"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0"
+  }
+}

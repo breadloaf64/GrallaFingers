@@ -2,7 +2,6 @@ import { PDFDocument, StandardFonts, degrees, rgb } from "pdf-lib";
 import { Dimensions, SolfegeDocument } from "./types";
 import { remapNumber } from "./utility";
 import { Y_SHIFT } from "./consts";
-import fs from "fs";
 
 async function addWatermark(pdfDoc: PDFDocument): Promise<void> {
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
