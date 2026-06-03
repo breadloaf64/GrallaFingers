@@ -1,5 +1,5 @@
 {
-  "name": "cli",
+  "name": "gralla-fingers-cli",
   "private": true,
   "scripts": {
     "convert": "tsx index.ts"
