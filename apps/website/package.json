@@ -7,11 +7,12 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc && npm run build:cp-public",
-    "build:cp-public": "cp ./public/** ./dist",
+    "dev": "npx vite",
+    "build": "npx vite build",
     "type": "npx tsc --noEmit"
   },
   "devDependencies": {
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16"
   }
 }
