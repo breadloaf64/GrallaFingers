@@ -1,5 +1,5 @@
 import { PDFDocument } from "pdf-lib";
-import { getDataForURL } from "./read";
+import { getDataForFile, getDataForFilepath } from "./read";
 import fs from "fs";
 import { addDiagramsAccordingToSolfege } from "./modifyPDF";
 import { printSolfegeDocument } from "./print";
@@ -30,7 +30,7 @@ async function createNewPDFWithDiagrams(
   const {
     solfegeDocument: solfege,
     parsedPageDimensions: parsedPageDimensions,
-  } = await getDataForURL(inputUrl);
+  } = await getDataForFilepath(inputUrl);
 
   console.log("Generated solfge:");
   printSolfegeDocument(solfege);
@@ -67,8 +67,26 @@ async function modifyPdfBytes(
 }
 
 async function convertOneUploadedFile(file: File) {
-  // TODO: complete me!
-  // return something that can be saved by the user
+  const {
+    solfegeDocument: solfege,
+    parsedPageDimensions: parsedPageDimensions,
+  } = await getDataForFile(file);
+
+  const diagramData = getDiagramData();
+
+  const arrayBuffer = await file.arrayBuffer();
+  const uint8Array = new Uint8Array(arrayBuffer);
+
+  const pdfBytesModified = await modifyPdfBytes(uint8Array, (pdfDoc: PDFDocument) =>
+    addDiagramsAccordingToSolfege(
+      pdfDoc,
+      solfege,
+      parsedPageDimensions,
+      diagramData
+    )
+  );
+
+  return pdfBytesModified;
 }
 
 export {
