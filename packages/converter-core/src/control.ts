@@ -3,6 +3,7 @@ import { getDataForURL } from "./read";
 import fs from "fs";
 import { addDiagramsAccordingToSolfege } from "./modifyPDF";
 import { printSolfegeDocument } from "./print";
+import { getDiagramData } from "./diagram";
 
 async function processFolder(diagramData: { [key: string]: Buffer }) {
   const IN_PATH = "./fileIO/in/";
@@ -65,8 +66,14 @@ async function modifyPdfBytes(
   return pdfBytes;
 }
 
+async function convertOneUploadedFile(file: File) {
+  // TODO: complete me!
+  // return something that can be saved by the user
+}
+
 export {
   createNewPDFWithDiagrams,
   createNewPDFWithModification,
   processFolder,
+  convertOneUploadedFile
 };
