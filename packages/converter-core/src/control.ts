@@ -12,6 +12,12 @@ async function processFolder(diagramData: { [key: string]: Buffer }) {
 
   const inputFileNames = fs.readdirSync(IN_PATH);
 
+  const invalidFiles = inputFileNames.filter((name) => !name.endsWith(".pdf"));
+  if (invalidFiles.length > 0) {
+    console.log("Invalid files found: ", invalidFiles);
+    throw new Error("Invalid files found in input folder");
+  }
+
   inputFileNames.forEach(async (name) => {
     console.log("Processing file: ", name);
     const inputFilePath = IN_PATH + name;
@@ -24,7 +30,7 @@ async function processFolder(diagramData: { [key: string]: Buffer }) {
 async function createNewPDFWithDiagrams(
   inputUrl: string,
   outputUrl: string,
-  diagramData: { [key: string]: Buffer }
+  diagramData: { [key: string]: Buffer },
 ) {
   const {
     solfegeDocument: solfege,
@@ -38,15 +44,15 @@ async function createNewPDFWithDiagrams(
       pdfDoc,
       solfege,
       parsedPageDimensions,
-      diagramData
-    )
+      diagramData,
+    ),
   );
 }
 
 async function createNewPDFWithModification(
   inputUrl: string,
   outputUrl: string,
-  modification: (pdfDoc: PDFDocument) => Promise<void>
+  modification: (pdfDoc: PDFDocument) => Promise<void>,
 ) {
   const pdfBytes = fs.readFileSync(inputUrl);
   const pdfBytesModified = await modifyPdfBytes(pdfBytes, modification);
@@ -55,7 +61,7 @@ async function createNewPDFWithModification(
 
 async function modifyPdfBytes(
   existingPdfBytes: Uint8Array,
-  modification: (pdfDoc: PDFDocument) => Promise<void>
+  modification: (pdfDoc: PDFDocument) => Promise<void>,
 ) {
   const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
