@@ -1,6 +1,5 @@
 import { PDFDocument } from "pdf-lib";
 import { getDataForFile, getDataForFilepath } from "./read";
-import fs from "fs";
 import { addDiagramsAccordingToSolfege } from "./modifyPDF";
 import { printSolfegeDocument } from "./print";
 import { getDiagramData } from "./diagram";
@@ -11,7 +10,8 @@ async function processFolder(diagramData: { [key: string]: Buffer }) {
 
   console.log("Processing folder: ", IN_PATH);
 
-  const inputFileNames = fs.readdirSync(IN_PATH);
+  const { readdirSync } = await import("fs");
+  const inputFileNames = readdirSync(IN_PATH);
 
   inputFileNames.forEach(async (name) => {
     console.log("Processing file: ", name);
@@ -49,9 +49,10 @@ async function createNewPDFWithModification(
   outputUrl: string,
   modification: (pdfDoc: PDFDocument) => Promise<void>
 ) {
-  const pdfBytes = fs.readFileSync(inputUrl);
+  const { readFileSync, writeFileSync } = await import("fs");
+  const pdfBytes = readFileSync(inputUrl);
   const pdfBytesModified = await modifyPdfBytes(pdfBytes, modification);
-  fs.writeFileSync(outputUrl, pdfBytesModified);
+  writeFileSync(outputUrl, pdfBytesModified);
 }
 
 async function modifyPdfBytes(
@@ -72,7 +73,7 @@ async function convertOneUploadedFile(file: File) {
     parsedPageDimensions: parsedPageDimensions,
   } = await getDataForFile(file);
 
-  const diagramData = getDiagramData();
+  const diagramData = await getDiagramData();
 
   const arrayBuffer = await file.arrayBuffer();
   const uint8Array = new Uint8Array(arrayBuffer);

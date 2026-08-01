@@ -1,4 +1,9 @@
 <html>
+  <script>
+    // Provide a minimal `process` shim for browser dev (prevents "process is not defined").
+    // Long-term: remove Node-only imports from frontend code instead of relying on this.
+    window.process = { env: {} };
+  </script>
   <script type="module" src="./index.js"></script>
 
   <body>

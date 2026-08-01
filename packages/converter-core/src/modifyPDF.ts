@@ -78,7 +78,7 @@ async function numberSolfege(
 
 async function addDiagramTest(
   pdfDoc: PDFDocument,
-  diagramData: { [key: string]: Buffer }
+  diagramData: { [key: string]: Uint8Array }
 ): Promise<void> {
   const page = pdfDoc.getPages()[0];
 
@@ -97,7 +97,7 @@ async function addDiagramsAccordingToSolfege(
   pdfDoc: PDFDocument,
   solfege: SolfegeDocument,
   parsedPageDimensions: Dimensions[],
-  diagramData: { [key: string]: Buffer }
+  diagramData: { [key: string]: Uint8Array }
 ): Promise<void> {
   if (pdfDoc.getPages().length !== solfege.length) {
     throw new Error(
